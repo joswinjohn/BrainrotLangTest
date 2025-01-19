@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Editor from "@monaco-editor/react";
+import Sandbox from "@nyariv/sandboxjs";
 
 export default function BrainrotEditor() {
   const [code, setCode] = useState("// Write your brainrot code here");
@@ -10,11 +11,31 @@ export default function BrainrotEditor() {
   };
 
   const handleRunCode = () => {
-    // This is a mock execution. In a real implementation,
-    // you would send the code to a backend for execution.
-    setOutput(
-      `Executing code:\n\n${code}\n\nMock output: Hello from brainrot lang!`
-    );
+    // Overwrite console.log so we can capture the output rather than logging to the console
+    let logOutput = "";
+    const scope = {
+      console: {
+        log: (...args: any[]) => {
+          logOutput += args.join(" ") + "\n";
+        },
+      },
+    };
+
+    const sandbox = new Sandbox();
+    try {
+      const exec = sandbox.compile(code);
+      const result = exec(scope).run();
+
+      // Parse the output. If the result is not undefined (i.e. the code has a return value),
+      // append the result to the log output from console.log
+      let parsedOutput = logOutput;
+      if (result !== undefined) {
+        parsedOutput += String(result);
+      }
+      setOutput(parsedOutput);
+    } catch (error: any) {
+      setOutput(error.toString());
+    }
   };
 
   return (
@@ -35,9 +56,9 @@ export default function BrainrotEditor() {
                 options={{
                   minimap: { enabled: false },
                   fontSize: 14,
-                  padding: { top: 24 }, // Add padding to the top
+                  padding: { top: 24 },
                 }}
-                className="rounded-lg" // Add rounded corners to the editor
+                className="rounded-lg"
               />
             </div>
             <button
