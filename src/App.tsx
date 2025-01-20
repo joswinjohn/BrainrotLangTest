@@ -22,9 +22,12 @@ export default function BrainrotEditor() {
     };
 
     const sandbox = new Sandbox();
+    let execTime = 0;
     try {
+      const startTime = performance.now();
       const exec = sandbox.compile(code);
       const result = exec(scope).run();
+      execTime = performance.now() - startTime;
 
       // Parse the output. If the result is not undefined (i.e. the code has a return value),
       // append the result to the log output from console.log
@@ -36,6 +39,11 @@ export default function BrainrotEditor() {
     } catch (error: any) {
       setOutput(error.toString());
     }
+
+    // Append the execution time to the output
+    setOutput(
+      (prevOutput) => prevOutput + `\n\nExecuted in ${execTime.toFixed(2)}ms`
+    );
   };
 
   return (
