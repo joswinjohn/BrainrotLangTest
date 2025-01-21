@@ -14,10 +14,8 @@ export default function BrainrotEditor() {
     // Overwrite console.log so we can capture the output rather than logging to the console
     let logOutput = "";
     const scope = {
-      console: {
-        log: (...args: any[]) => {
-          logOutput += args.join(" ") + "\n";
-        },
+      yap: (...args: any[]) => {
+        logOutput += args.join(" ") + "\n";
       },
     };
 
