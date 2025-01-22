@@ -1,16 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
 import Sandbox from "@nyariv/sandboxjs";
+import { aliases } from "./aliases";
 
 export default function BrainrotEditor() {
-  const [code, setCode] = useState("// Write your brainrot code here");
+  const [code, setCode] = useState("// Loading example code...");
   const [output, setOutput] = useState("");
+
+  // Fetch the example code from the example.txt file
+  useEffect(() => {
+    fetch("/src/example.txt")
+      .then((response) => response.text())
+      .then((text) => setCode(text))
+      .catch((error) => console.error("Error loading example code:", error));
+  }, []);
 
   const handleEditorChange = (value: string | undefined) => {
     setCode(value || "");
   };
 
   const handleRunCode = () => {
+    // Replace aliases in the code with their corresponding values
+    let codeWithAliases = code;
+    for (const [alias, value] of Object.entries(aliases)) {
+      codeWithAliases = codeWithAliases.replace(new RegExp(alias, "g"), value);
+    }
+    console.log(codeWithAliases);
+
     // Overwrite console.log so we can capture the output rather than logging to the console
     let logOutput = "";
     const scope = {
@@ -23,7 +39,7 @@ export default function BrainrotEditor() {
     let execTime = 0;
     try {
       const startTime = performance.now();
-      const exec = sandbox.compile(code);
+      const exec = sandbox.compile(codeWithAliases);
       const result = exec(scope).run();
       execTime = performance.now() - startTime;
 

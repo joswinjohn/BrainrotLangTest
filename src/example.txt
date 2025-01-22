@@ -1,0 +1,18 @@
+glaze maxHuzz = 10;
+
+diddy pookieMath(cringe) {
+  edge (cringe == 0) {
+    hawk tuah 1;
+  } ohio {
+    hawk tuah cringe * pookieMath(cringe - 1);
+  }
+}
+
+fanum tax (beta huzz = 0; huzz < maxHuzz; huzz++) {
+  edge (huzz % 2 === 0) {
+    yap("I have skibidi rizz!!! " + huzz);
+  } ohio edge (huzz === 7) {
+    yap("My rizz is sussy!!!");
+  }
+  yap(pookieMath(huzz));
+}
