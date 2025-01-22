@@ -1,18 +1,19 @@
-glaze maxHuzz = 10;
+// Use the Run Code button to run the Brainrot code below
+sigma maxHuzz = 10;
 
-diddy pookieMath(cringe) {
-  edge (cringe == 0) {
-    hawk tuah 1;
-  } ohio {
-    hawk tuah cringe * pookieMath(cringe - 1);
+diddy pookieMath(pookies) {
+  ohio (pookies == 0) {
+    looksmaxx 1;
+  } zesty {
+    looksmaxx pookies * pookieMath(pookies - 1);
   }
 }
 
-fanum tax (beta huzz = 0; huzz < maxHuzz; huzz++) {
-  edge (huzz % 2 === 0) {
-    yap("I have skibidi rizz!!! " + huzz);
-  } ohio edge (huzz === 7) {
-    yap("My rizz is sussy!!!");
+ratio (sus huzz = 1; huzz < maxHuzz; huzz++) {
+  ohio (huzz % 2 === 0) {
+    yap("I have skibidi rizz!!!");
+  } zesty ohio (huzz === 7) {
+    yap("Womp womp");
   }
   yap(pookieMath(huzz));
 }

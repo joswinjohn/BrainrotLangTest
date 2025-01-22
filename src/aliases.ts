@@ -1,21 +1,22 @@
 export const aliases = {
-    "womp womp": "break",
+    "cooked": "break",
     "opp": "catch",
-    "glaze": "const",
+    "sigma": "const",
     "jelq": "continue",
-    "ohio": "else",
+    "zesty": "else",
     "cap": "false",
-    "sigma": "finally",
-    "fanum tax": "for",
+    "cringe": "finally",
+    "ratio": "for",
     "diddy": "function",
-    "edge": "if",
+    "ohio": "if",
     "mew": "in",
-    "beta": "let",
+    "sus": "let",
     "shyt": "null",
-    "hawk tuah": "return",
+    "looksmaxx": "return",
     "aura": "true",
-    "looksmaxx": "typeof",
+    "edge": "try",
+    "mog": "typeof",
     "alpha": "var",
-    "gyatt": "while"
+    "goon": "while"
 };
 // yap corresponds to console.log

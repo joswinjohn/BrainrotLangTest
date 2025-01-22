@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Editor, { loader } from "@monaco-editor/react";
 import Sandbox from "@nyariv/sandboxjs";
 import { aliases } from "./aliases";
-import { brainrotLang } from "./lang-config";
+import { brainrotLang } from "./editor-config";
 
 // Register the custom language configuration
 loader.init().then((monaco) => {

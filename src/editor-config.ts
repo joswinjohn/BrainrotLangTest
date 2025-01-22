@@ -1,7 +1,11 @@
 // Configuration for the Brainrot language in the Monaco Editor
 import { languages } from "monaco-editor";
+import { aliases } from "./aliases";
 
 type IMonarchLanguageRule = languages.IMonarchLanguageRule;
+
+const keywords = Object.keys(aliases);
+keywords.push("yap") // Custom console.log function
 
 export const brainrotLang = {
   id: "brainrot",
@@ -29,26 +33,7 @@ export const brainrotLang = {
       language: {
         defaultToken: "",
         tokenPostfix: ".br",
-        keywords: [
-          "womp womp",
-          "opp",
-          "glaze",
-          "jelq",
-          "ohio",
-          "cap",
-          "sigma",
-          "fanum tax",
-          "diddy",
-          "edge",
-          "mew",
-          "beta",
-          "shyt",
-          "hawk tuah",
-          "aura",
-          "looksmaxx",
-          "alpha",
-          "gyatt",
-        ],
+        keywords: keywords,
         operators: ["=", ">", "<", "!", "==", "!=", "===", "!==", "+", "-", "*", "/", "%"],
         symbols: /[=><!~?:&|+\-*\/\^%]+/,
         tokenizer: {
