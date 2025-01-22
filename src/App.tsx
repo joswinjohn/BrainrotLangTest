@@ -1,7 +1,21 @@
 import { useEffect, useState } from "react";
-import Editor from "@monaco-editor/react";
+import Editor, { loader } from "@monaco-editor/react";
 import Sandbox from "@nyariv/sandboxjs";
 import { aliases } from "./aliases";
+import { brainrotLang } from "./lang-config";
+
+// Register the custom language configuration
+loader.init().then((monaco) => {
+  monaco.languages.register({ id: brainrotLang.id });
+  monaco.languages.setMonarchTokensProvider(
+    brainrotLang.id,
+    brainrotLang.loader().language
+  );
+  monaco.languages.setLanguageConfiguration(
+    brainrotLang.id,
+    brainrotLang.loader().conf
+  );
+});
 
 export default function BrainrotEditor() {
   const [code, setCode] = useState("// Loading example code...");
@@ -9,7 +23,7 @@ export default function BrainrotEditor() {
 
   // Fetch the example code from the example.txt file
   useEffect(() => {
-    fetch("/src/example.txt")
+    fetch("/src/exampleCode.txt")
       .then((response) => response.text())
       .then((text) => setCode(text))
       .catch((error) => console.error("Error loading example code:", error));
@@ -25,7 +39,6 @@ export default function BrainrotEditor() {
     for (const [alias, value] of Object.entries(aliases)) {
       codeWithAliases = codeWithAliases.replace(new RegExp(alias, "g"), value);
     }
-    console.log(codeWithAliases);
 
     // Overwrite console.log so we can capture the output rather than logging to the console
     let logOutput = "";
@@ -71,8 +84,8 @@ export default function BrainrotEditor() {
             <div className="mb-4 overflow-hidden rounded-lg border border-gray-200">
               <Editor
                 height="300px"
-                defaultLanguage="javascript" // You can create a custom language for brainrot if needed
-                defaultValue={code}
+                language={brainrotLang.id}
+                value={code}
                 onChange={handleEditorChange}
                 theme="vs-dark"
                 options={{
