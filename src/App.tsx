@@ -21,6 +21,7 @@ export default function BrainrotEditor() {
   const [code, setCode] = useState("// Loading example code...");
   const [output, setOutput] = useState("");
   const [execTime, setExecTime] = useState<null | number>(null);
+  const [showTutorial, setShowTutorial] = useState(true);
 
   // Fetch the example code from the example.txt file
   useEffect(() => {
@@ -75,7 +76,9 @@ export default function BrainrotEditor() {
   return (
     <div className="grid grid-cols-12 gap-6 p-8">
       <div
-        className="col-span-9 flex flex-col"
+        className={`col-span-9 flex flex-col ${
+          showTutorial ? "" : "col-start-2 col-span-10"
+        }`}
         style={{ minHeight: "calc(100vh - 5rem)" }}
       >
         <h1 className="pb-2 text-3xl font-bold text-center text-gray-800">
@@ -96,12 +99,20 @@ export default function BrainrotEditor() {
               className="h-96"
             />
           </div>
-          <button
-            onClick={handleRunCode}
-            className="w-full bg-gray-800 rounded-lg mb-4 text-md font-semibold text-white py-2"
-          >
-            Run Code
-          </button>
+          <div className="flex justify-between items-center space-x-2">
+            <button
+              onClick={handleRunCode}
+              className="w-full bg-gray-800 rounded-lg text-md font-semibold text-white py-2"
+            >
+              Run Code
+            </button>
+            <button
+              onClick={() => setShowTutorial(!showTutorial)}
+              className="py-2 px-6 rounded-lg text-md font-semibold text-gray-800 border border-gray-800 hover:text-white hover:bg-gray-800"
+            >
+              Tutorial
+            </button>
+          </div>
           <div className="flex-grow bg-gray-800 text-white p-4 rounded-lg border border-gray-700">
             <h2 className="text-lg font-semibold mb-2">Output:</h2>
             <pre className="whitespace-pre-wrap font-mono text-sm">
@@ -117,9 +128,17 @@ export default function BrainrotEditor() {
         </div>
       </div>
       <div
-        className="col-span-3 sticky top-12 overflow-auto shadow-lg rounded-lg text-gray-800"
+        className={`col-span-3 sticky top-12 overflow-auto shadow-lg rounded-lg text-gray-800 ${
+          showTutorial ? "block" : "hidden"
+        }`}
         style={{ height: "calc(100vh - 5rem)" }}
       >
+        <button
+          onClick={() => setShowTutorial(false)}
+          className="absolute top-2 right-2 text-2xl text-gray-500 hover:text-gray-700"
+        >
+          &times;
+        </button>
         <h1 className="text-2xl font-bold pt-6 text-black text-center">
           Tutorial
         </h1>
