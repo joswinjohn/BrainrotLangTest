@@ -20,6 +20,7 @@ loader.init().then((monaco) => {
 export default function BrainrotEditor() {
   const [code, setCode] = useState("// Loading example code...");
   const [output, setOutput] = useState("");
+  const [execTime, setExecTime] = useState<null | number>(null);
 
   // Fetch the example code from the example.txt file
   useEffect(() => {
@@ -67,48 +68,83 @@ export default function BrainrotEditor() {
       setOutput(error.toString());
     }
 
-    // Append the execution time to the output
-    setOutput(
-      (prevOutput) => prevOutput + `\n\nExecuted in ${execTime.toFixed(2)}ms`
-    );
+    // Set the code execution time
+    setExecTime(execTime);
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-center text-gray-900 mb-6">
-          Brainrot Lang Editor
+    <div className="grid grid-cols-12 gap-6 p-8">
+      <div
+        className="col-span-9 flex flex-col"
+        style={{ minHeight: "calc(100vh - 5rem)" }}
+      >
+        <h1 className="pb-2 text-3xl font-bold text-center text-gray-800">
+          Brainrot Lang
         </h1>
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-          <div className="p-6">
-            <div className="mb-4 overflow-hidden rounded-lg border border-gray-200">
-              <Editor
-                height="300px"
-                language={brainrotLang.id}
-                value={code}
-                onChange={handleEditorChange}
-                theme="vs-dark"
-                options={{
-                  minimap: { enabled: false },
-                  fontSize: 14,
-                  padding: { top: 24 },
-                }}
-                className="rounded-lg"
-              />
-            </div>
-            <button
-              onClick={handleRunCode}
-              className="w-full bg-gray-800 rounded-lg mb-4 text-md font-semibold text-white py-2"
-            >
-              Run Code
-            </button>
-            <div className="bg-gray-800 text-white p-4 rounded-lg border border-gray-700">
-              <h2 className="text-lg font-semibold mb-2">Output:</h2>
-              <pre className="whitespace-pre-wrap font-mono text-sm">
-                {output || "Code execution output will appear here."}
-              </pre>
-            </div>
+        <div className="flex flex-col flex-grow space-y-4 bg-white shadow-lg rounded-lg p-6">
+          <div className="overflow-hidden rounded-lg">
+            <Editor
+              language={brainrotLang.id}
+              value={code}
+              onChange={handleEditorChange}
+              theme="vs-dark"
+              options={{
+                minimap: { enabled: false },
+                fontSize: 14,
+                padding: { top: 24 },
+              }}
+              className="h-96"
+            />
           </div>
+          <button
+            onClick={handleRunCode}
+            className="w-full bg-gray-800 rounded-lg mb-4 text-md font-semibold text-white py-2"
+          >
+            Run Code
+          </button>
+          <div className="flex-grow bg-gray-800 text-white p-4 rounded-lg border border-gray-700">
+            <h2 className="text-lg font-semibold mb-2">Output:</h2>
+            <pre className="whitespace-pre-wrap font-mono text-sm">
+              {output || "Code execution output will appear here."}
+              <br />
+              {execTime ? (
+                <span className="text-gray-400">
+                  Executed in {execTime?.toFixed(2)}ms
+                </span>
+              ) : null}
+            </pre>
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-span-3 sticky top-12 overflow-auto shadow-lg rounded-lg text-gray-800"
+        style={{ height: "calc(100vh - 5rem)" }}
+      >
+        <h1 className="text-2xl font-bold pt-6 text-black text-center">
+          Tutorial
+        </h1>
+        <div className="px-6 pt-3">
+          <p className="text-md mb-4">
+            Welcome to Brainrot Lang! This is a simple programming language
+            based on JavaScript that uses brainrot terms instead of JavaScript
+            keywords.
+            <br />
+            <br />
+            Use the keywords listed below in place of their JavaScript
+            equialents to write code in brainrot.
+          </p>
+        </div>
+        <div className="px-6 pb-6">
+          <h2 className="text-lg font-semibold text-black mb-2">Keywords:</h2>
+          <ul className="text-md list-disc px-6">
+            {Object.entries(aliases).map(([alias, value]) => (
+              <li key={alias}>
+                <code>
+                  <span className="font-semibold">{alias}</span> - {value}
+                </code>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
