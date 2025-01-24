@@ -74,13 +74,11 @@ export default function BrainrotEditor() {
     setExecTime(execTime);
   };
 
-  // TODO: Create a tutorialcontent component that can be reused
-
   return (
     <div className="grid grid-cols-12 gap-6 p-8">
       <div
-        className={`col-span-12 md:col-span-9 flex flex-col ${
-          showTutorial ? "" : "md:col-start-2 md:col-span-10"
+        className={`col-span-12 flex flex-col ${
+          showTutorial ? "md:col-span-9" : "md:col-start-2 md:col-span-10"
         }`}
         style={{ minHeight: "calc(100vh - 5rem)" }}
       >
