@@ -167,6 +167,7 @@ export default function BrainrotEditor() {
         </div>
       </div>
       <div
+        onClick={() => setShowTutorial(false)}
         className={`absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-50 ${
           showTutorial ? "block md:hidden" : "hidden"
         }`}
