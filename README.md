@@ -1,50 +1,54 @@
-# React + TypeScript + Vite
+# Brainrot Lang
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple programming language based off of popular internet brainrot terms. This language is designed to be similar to JavaScript, but with most major keywords replaced with brainrot.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Brainrot**: Your code will no longer be understandable, only brainrot!
+- **Online Interpreter**: Brianrot runs in your browser, so you can test your code without installing anything.
+- **Responsive Design**: The interpreter works on both desktop and mobile devices.
+- **Simple Tutorial**: A tutorial is included in the website to help you get started with Brainrot.
 
-## Expanding the ESLint configuration
+## Example
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Code
 
-- Configure the top-level `parserOptions` property like this:
+```
+sigma maxHuzz = 10;
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+diddy pookieMath(pookies) {
+  ohio (pookies == 0) {
+    looksmaxx 1;
+  } zesty {
+    looksmaxx pookies * pookieMath(pookies - 1);
+  }
+}
+
+ratio (sus huzz = 1; huzz < maxHuzz; huzz++) {
+  ohio (huzz % 2 === 0) {
+    yap("I have skibidi rizz!!!");
+  } zesty ohio (huzz === 7) {
+    yap("Womp womp");
+  }
+  yap(pookieMath(huzz));
+}
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Output
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```
+1
+I have skibidi rizz!!!
+2
+6
+I have skibidi rizz!!!
+24
+120
+I have skibidi rizz!!!
+720
+Womp womp
+5040
+I have skibidi rizz!!!
+40320
+362880
 ```
