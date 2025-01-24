@@ -76,15 +76,15 @@ export default function BrainrotEditor() {
   return (
     <div className="grid grid-cols-12 gap-6 p-8">
       <div
-        className={`col-span-9 flex flex-col ${
-          showTutorial ? "" : "col-start-2 col-span-10"
+        className={`col-span-12 md:col-span-9 flex flex-col ${
+          showTutorial ? "" : "md:col-start-2 md:col-span-10"
         }`}
         style={{ minHeight: "calc(100vh - 5rem)" }}
       >
         <h1 className="pb-2 text-3xl font-bold text-center text-gray-800">
           Brainrot Lang
         </h1>
-        <div className="flex flex-col flex-grow space-y-4 bg-white shadow-lg rounded-lg p-6">
+        <div className="flex flex-col flex-grow space-y-4 bg-white shadow-lg rounded-lg p-3 md:p-6">
           <div className="overflow-hidden rounded-lg">
             <Editor
               language={brainrotLang.id}
@@ -128,8 +128,8 @@ export default function BrainrotEditor() {
         </div>
       </div>
       <div
-        className={`col-span-3 sticky top-12 overflow-auto shadow-lg rounded-lg text-gray-800 ${
-          showTutorial ? "block" : "hidden"
+        className={`hidden col-span-3 sticky top-12 overflow-auto shadow-lg rounded-lg text-gray-800 ${
+          showTutorial ? "md:block" : ""
         }`}
         style={{ height: "calc(100vh - 5rem)" }}
       >
@@ -164,6 +164,46 @@ export default function BrainrotEditor() {
               </li>
             ))}
           </ul>
+        </div>
+      </div>
+      <div
+        className={`absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-50 ${
+          showTutorial ? "block md:hidden" : "hidden"
+        }`}
+      >
+        <div className="relative border border-black my-20 mx-10 h-[calc(100vh-10rem)] overflow-auto bg-white rounded-lg shadow-lg">
+          <button
+            onClick={() => setShowTutorial(false)}
+            className="absolute top-2 right-4 text-2xl text-gray-500 hover:text-gray-700"
+          >
+            &times;
+          </button>
+          <h1 className="text-2xl font-bold pt-6 text-black text-center">
+            Tutorial
+          </h1>
+          <div className="px-6 pt-3">
+            <p className="text-md mb-4">
+              Welcome to Brainrot Lang! This is a simple programming language
+              based on JavaScript that uses brainrot terms instead of JavaScript
+              keywords.
+              <br />
+              <br />
+              Use the keywords listed below in place of their JavaScript
+              equialents to write code in brainrot.
+            </p>
+          </div>
+          <div className="px-6 pb-6">
+            <h2 className="text-lg font-semibold text-black mb-2">Keywords:</h2>
+            <ul className="text-md list-disc px-6">
+              {Object.entries(aliases).map(([alias, value]) => (
+                <li key={alias}>
+                  <code>
+                    <span className="font-semibold">{alias}</span> - {value}
+                  </code>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
