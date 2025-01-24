@@ -26,7 +26,7 @@ export default function BrainrotEditor() {
 
   // Fetch the example code from the example.txt file
   useEffect(() => {
-    fetch("/src/exampleCode.txt")
+    fetch("/exampleCode.txt")
       .then((response) => response.text())
       .then((text) => setCode(text))
       .catch((error) => console.error("Error loading example code:", error));
