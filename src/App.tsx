@@ -22,6 +22,7 @@ export default function BrainrotEditor() {
   const [code, setCode] = useState("// Loading example code...");
   const [output, setOutput] = useState("");
   const [execTime, setExecTime] = useState<null | number>(null);
+  const [compileTime, setCompileTime] = useState<null | number>(null);
   const [showTutorial, setShowTutorial] = useState(true);
 
   // Fetch the example code from the example.txt file
@@ -37,6 +38,9 @@ export default function BrainrotEditor() {
   };
 
   const handleRunCode = () => {
+    // start compile timer
+    const compileStartTime = performance.now();
+
     // Replace aliases in the code with their corresponding values
     let codeWithAliases = code;
     for (const [alias, value] of Object.entries(aliases)) {
@@ -52,12 +56,13 @@ export default function BrainrotEditor() {
     };
 
     const sandbox = new Sandbox();
+    let compileTime = performance.now() - compileStartTime;
+    let execStartTime = performance.now();
     let execTime = 0;
     try {
-      const startTime = performance.now();
       const exec = sandbox.compile(codeWithAliases);
       const result = exec(scope).run();
-      execTime = performance.now() - startTime;
+      execTime = performance.now() - execStartTime;
 
       // Parse the output. If the result is not undefined (i.e. the code has a return value),
       // append the result to the log output from console.log
@@ -72,14 +77,14 @@ export default function BrainrotEditor() {
 
     // Set the code execution time
     setExecTime(execTime);
+    setCompileTime(compileTime);
   };
 
   return (
     <div className="grid grid-cols-12 gap-6 p-8">
       <div
-        className={`col-span-12 flex flex-col ${
-          showTutorial ? "md:col-span-9" : "md:col-start-2 md:col-span-10"
-        }`}
+        className={`col-span-12 flex flex-col ${showTutorial ? "md:col-span-9" : "md:col-start-2 md:col-span-10"
+          }`}
         style={{ minHeight: "calc(100vh - 5rem)" }}
       >
         <h1 className="pb-2 text-3xl font-bold text-center text-gray-800">
@@ -119,9 +124,15 @@ export default function BrainrotEditor() {
             <pre className="whitespace-pre-wrap font-mono text-sm">
               {output || "Code execution output will appear here."}
               <br />
+              {compileTime ? (
+                <span className="text-gray-400">
+                  Compiled in {compileTime?.toFixed(3)}ms
+                </span>
+              ) : null}
+              <br />
               {execTime ? (
                 <span className="text-gray-400">
-                  Executed in {execTime?.toFixed(2)}ms
+                  Executed in {execTime?.toFixed(3)}ms
                 </span>
               ) : null}
             </pre>
@@ -129,9 +140,8 @@ export default function BrainrotEditor() {
         </div>
       </div>
       <div
-        className={`hidden col-span-3 sticky top-12 overflow-auto shadow-lg rounded-lg text-gray-800 ${
-          showTutorial ? "md:block" : ""
-        }`}
+        className={`hidden col-span-3 sticky top-12 overflow-auto shadow-lg rounded-lg text-gray-800 ${showTutorial ? "md:block" : ""
+          }`}
         style={{ height: "calc(100vh - 5rem)" }}
       >
         <button
@@ -144,9 +154,8 @@ export default function BrainrotEditor() {
       </div>
       <div
         onClick={() => setShowTutorial(false)}
-        className={`absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-50 ${
-          showTutorial ? "block md:hidden" : "hidden"
-        }`}
+        className={`absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-50 ${showTutorial ? "block md:hidden" : "hidden"
+          }`}
       >
         <div className="relative border border-black my-20 mx-10 h-[calc(100vh-10rem)] overflow-auto bg-white rounded-lg shadow-lg">
           <button
